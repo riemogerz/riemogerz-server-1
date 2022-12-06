@@ -4,7 +4,7 @@ const datasRoutes = require('./datasRoutes')
 const pemiluRoutes = require('./pemiluRoutes')
 const errorHandler = require('../middlewares/errorHandler')
 
-router.use('/datas', datasRoutes)
+router.use('/berita', datasRoutes)
 
 router.use('/pemilu', pemiluRoutes)
 

@@ -21,29 +21,11 @@ class DataController {
 			data.map(el => {
 				el.id = el.IDDapil
 				delete el.IDDapil
+				delete el.URL
+				el.wilayah = el.wilayah.split(',')
+
 				return el
 			})
-
-			res.status(200).json(data)
-		} catch (error) {
-			next(error)
-		}
-	}
-
-	static async renderDataPerolehanSuara(req, res, next) {
-		const { id } = req.params
-		console.log(id, '<<<<<<<<<<');
-		try {
-			const { data } = await axios({
-				url: `${baseUrl}/dataperolehansuarapartaidpr?id_dapil=${id}&limit=5`,
-				method: 'get',
-				headers: {
-					Accept: 'application/json',
-					'Accept-Encoding': 'identity',
-					'x-api-key': apikey
-				}
-			})
-			if (!data || data.status) throw { name: 'NotFound' }
 
 			res.status(200).json(data)
 		} catch (error) {
