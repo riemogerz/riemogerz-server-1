@@ -1,10 +1,12 @@
 const axios = require('axios')
 
+const baseUrl = 'https://api-berita-indonesia.vercel.app'
+
 class DataController {
 	static async renderData(req, res, next) {
 		try {
 			const { data } = await axios({
-				url: 'https://api-berita-indonesia.vercel.app/antara/politik/',
+				url: `${baseUrl}/antara/politik/`,
 				method: 'get',
 				headers: {
 					Accept: 'application/json',
@@ -23,6 +25,7 @@ class DataController {
 			next(error)
 		}
 	}
+
 }
 
 module.exports = DataController
