@@ -5,14 +5,6 @@ const errorHandler = async function (err, req, res, next) {
 	let code, message;
 
 	switch (name) {
-		case 'FoundData':
-			code = 200;
-			message = 'Data has already been added to favorites'
-			break;
-		case 'InvalidRole':
-			code = 200;
-			message = "You cann't be a customer, because you're already an Admin/Staff"
-			break;
 		case "SequelizeValidationError":
 		case "SequelizeUniqueConstraintError":
 			code = 400;
@@ -20,24 +12,32 @@ const errorHandler = async function (err, req, res, next) {
 			break;
 		case "BadRequest":
 			code = 400;
-			message = "Email or password is required";
+			message = "Email atau password diperlukan";
 			break;
 		case "Unauthorized":
 		case "JsonWebTokenError":
 			code = 401;
-			message = "Error authentication";
+			message = "Error autentikasi";
 			break;
 		case "InvalidCredentials":
 			code = 401;
-			message = "Error login! Email or Password not matched";
+			message = "Error login! Email atau Password belum tepat";
 			break;
 		case "Forbidden":
 			code = 403;
-			message = "Forbidden error in authorization";
+			message = "Kesalahan otorisasi";
 			break;
 		case "NotFound":
 			code = 404;
-			message = "Data not found";
+			message = "Data tidak ditemukan";
+			break;
+		case "NotVerified":
+			code = 404;
+			message = "Gagal terverifikasi, silakan lakukan verifikasi ulang";
+			break;
+		case "NotMatch":
+			code = 404;
+			message = "Password tidak cocok, silakan tulis ulang";
 			break;
 		default:
 			code = 500
