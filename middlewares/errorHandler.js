@@ -33,7 +33,7 @@ const errorHandler = async function (err, req, res, next) {
 			break;
 		case "NotVerified":
 			code = 404;
-			message = "Gagal terverifikasi, silakan lakukan verifikasi ulang";
+			message = "Gagal terverifikasi, silakan lakukan verifikasi";
 			break;
 		case "NotMatch":
 			code = 404;

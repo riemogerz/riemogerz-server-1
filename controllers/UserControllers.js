@@ -1,7 +1,8 @@
-const { hashPassword, comparePassword } = require('../helper/bcrypt');
+const { hashPassword, comparePassword } = require('../helpers/bcrypt');
 const nodemailer = require('nodemailer');
 const { User } = require('../models/index')
 const { Op } = require("sequelize");
+const { createToken } = require('../helpers/jwt');
 
 const baseurl = 'http://localhost:3000'
 const emailAdmin = process.env.SECRET_EMAIL
@@ -116,6 +117,33 @@ class UserController {
 			next(error)
 		}
 	}
+
+	static async login(req, res, next) {
+		try {
+			const { email, password } = req.body
+			console.log(email, password, '<<<<<<');
+			if (!email || !password) throw { name: 'InvalidCredentials' }
+
+			const foundUser = await User.findOne({ where: { email } });
+			console.log(foundUser, '---------');
+
+			if (!foundUser) throw { name: 'InvalidCredentials' };
+			if (foundUser.validation === 'false') throw { name: 'NotVerified' }
+
+			const comparedPassword = comparePassword(password, foundUser.password);
+			if (!comparedPassword) throw { name: 'InvalidCredentials' };
+
+			const user_id = foundUser.id
+			const access_token = createToken({ id: user_id })
+
+			res.status(200).json({
+				access_token, user_id, email: foundUser.email
+			})
+		} catch (error) {
+			next(error)
+		}
+	}
+
 
 }
 
