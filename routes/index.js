@@ -1,18 +1,18 @@
 const express = require('express')
 const router = express.Router()
-
 const userRoutes = require('./userRoutes')
 const beritaRoutes = require('./beritaRoutes')
 const pemiluRoutes = require('./pemiluRoutes')
-
+// const pollingRoutes = require('./pollingRoutes')
 const errorHandler = require('../middlewares/errorHandler')
 
 const UserController = require('../controllers/UserControllers')
 
-
 router.use('/users', userRoutes)
 router.use('/berita', beritaRoutes)
 router.use('/pemilu', pemiluRoutes)
+
+// router.use('/polling', pollingRoutes)
 
 router.post('/verify', UserController.verify)
 router.get('/verify/:validateKey', UserController.verify)
