@@ -121,12 +121,9 @@ class UserController {
 	static async login(req, res, next) {
 		try {
 			const { email, password } = req.body
-			console.log(email, password, '<<<<<<');
 			if (!email || !password) throw { name: 'InvalidCredentials' }
 
 			const foundUser = await User.findOne({ where: { email } });
-			console.log(foundUser, '---------');
-
 			if (!foundUser) throw { name: 'InvalidCredentials' };
 			if (foundUser.validation === 'false') throw { name: 'NotVerified' }
 
@@ -137,7 +134,7 @@ class UserController {
 			const access_token = createToken({ id: user_id })
 
 			res.status(200).json({
-				access_token, user_id, email: foundUser.email
+				access_token, user_id, email: foundUser.email, validateKey: foundUser.validateKey
 			})
 		} catch (error) {
 			next(error)
